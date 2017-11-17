@@ -1,0 +1,21 @@
+application:
+  deploy:
+    repository: https://github.com/bvcelari/aws_hello_demo.git
+    branch: master
+    user: ubuntu
+    group: ubuntu
+    directory: /opt/hello_app
+    service: hello_app
+    runtime: python3
+  # All the items under this section will be converted into a systemd environment
+  # file.
+  config:
+    name: 'app:app'
+    host: '0.0.0.0'
+    port: 8080
+  # database_uri: postgres://user:password@mydatabaseserver/application_db
+    workers: {{ grains['num_cpus'] }}
+  check:
+    endpoint: '/api/v1/status'
+    interval: '10s'
+
